@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:internet_checker/check_internet_connection.dart';
+import 'package:internet_checker/internet_connected.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
@@ -27,26 +29,56 @@ class _MyHomePageState extends State<MyHomePage> {
             Visibility(
               visible: Provider.of<InternetConnectionStatus>(context) ==
                   InternetConnectionStatus.disconnected,
-              child: const InternetNotAvailable(),
+              // child: CheckInternetConnection(),
+              child: InternetNotAvailable()
             ),
+            Visibility(
+              visible: Provider.of<InternetConnectionStatus>(context) ==
+                  InternetConnectionStatus.connected,
+              // child: CheckInternetConnection(),
+              child: InternetConnected()
+            ),
+
             Provider.of<InternetConnectionStatus>(context) ==
                     InternetConnectionStatus.disconnected
-                ? Expanded(
-                    child: Center(
-                      child: Text(
-                        'Not connected',
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                    ),
+                ? Column(
+                    children: [
+                      // Visibility(
+                      //   visible: Provider.of<InternetConnectionStatus>(context) ==
+                      //       InternetConnectionStatus.disconnected,
+                      //   // child: const InternetNotAvailable(),
+                      //   child: CheckInternetConnection(isConnected: false),
+                      // ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            'Not connected',
+                            style: Theme.of(context).textTheme.headline4,
+                          ),
+                        ),
+                      )
+                    ],
                   )
-                : Expanded(
-                    child: Center(
-                      child: Text(
-                        'Connected',
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                    ),
-                  ),
+
+                : Column(
+                    children: [
+                      // Visibility(
+                      //   visible: Provider.of<InternetConnectionStatus>(context) ==
+                      //       InternetConnectionStatus.connected,
+                      //   // child: const InternetNotAvailable(),
+                      //   child: CheckInternetConnection(isConnected: true),
+                      // ),
+                      // Expanded(
+                      //   child: 
+                      // )
+                      Center(
+                          child: Text(
+                            'Connected',
+                            style: Theme.of(context).textTheme.headline4,
+                          ),
+                        ),
+                    ],
+                  )
           ],
         ),
       ),
